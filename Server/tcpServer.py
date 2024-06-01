@@ -1,5 +1,5 @@
 import socket
-
+from utilsServer import CONSTANTS
 
 class TCPServer(object):
     def __init__(self):
@@ -17,5 +17,5 @@ class TCPServer(object):
         clientsocket, address = self.serversocket.accept()
         r = clientsocket.recv(1024)
         data = self.process_request(r)
-        clientsocket.sendall(data.encode('utf-8'))            # 用 sendall 发送响应给客户端
+        clientsocket.sendall(data.encode(CONSTANTS.code_method))            # 用 sendall 发送响应给客户端
         clientsocket.close()

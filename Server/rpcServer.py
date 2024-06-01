@@ -2,16 +2,8 @@ import json
 import tcpServer
 
 from utilsServer import CONSTANTS
+from funcRegister import funcRegister
 
-class RPCStub(object):
-    def __init__(self):
-        self.funcs = {}
-
-    def register_function(self, fn, name=None):
-        """Server 端方法的注册，已注册的方法可以在 Client 端调用"""
-        if name is None:
-            name = fn.__name__
-        self.funcs[name] = fn
 
 
 class JSONRPC(object):
@@ -36,13 +28,13 @@ class JSONRPC(object):
         return json.dumps(data)
 
 
-class RPCServer(tcpServer.TCPServer, JSONRPC, RPCStub):
+class RPCServer(tcpServer.TCPServer, JSONRPC, funcRegister):
     def __init__(self):
         # super(RPCServer, self).__init__() # 多继承的情况下，默认初始化 TCPServer
         # super().__init__()                # 多继承的情况下，默认初始化 TCPServer
         tcpServer.TCPServer.__init__(self)
         JSONRPC.__init__(self)
-        RPCStub.__init__(self)
+        funcRegister.__init__(self)
 
     def loop(self, host=CONSTANTS.host_server, port=CONSTANTS.port_server):
         self.bind_listen(host, port)
