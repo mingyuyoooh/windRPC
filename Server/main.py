@@ -1,26 +1,40 @@
-import rpcServer
+from ServerRPC import RPCServer
+from ServerFuncs import *
+from ServerUtils import CONSTANTS,Tools
+
 
 """
-3.1 消息格式定义，消息序列化和反序列化（❋）
-消息的格式，以及其序列化和反序列化方式可以自行定义，具体可以参考之
-前我们处理 tcp 粘包的过程，另外消息的序列化和反序列化方式也可以使用其
-他主流的序列化方式，如 json、xml 和 protobuf 等方式。
-3.2 服务注册（❋）
-RPC 服务端启动时需要注册其能支持的函数。我们要求服务端至少能同时支
-持注册 10 个以上的函数。
-如果你的设计中包括 “服务注册中心”，请通过它进行服务的注册。
+Server:  main.py
+
+本文件用于执行服务端，主要功能包括：
+    启动参数加载；
+    函数加载和注册；
+    客户端信息接收与处理
+
 """
 
+if __name__ == "__main__":
 
+    # 启动参数加载
+    Tools.argparser()
 
-def test(*args, **kwargs):
-    print("服务器端注册的 test 被调用了")
-    print("test: args = {}, kwargs = {}".format(args, kwargs))
-    return 'the test function has been called'
+    s = RPCServer()       
+    #基本计算函数
+    # s.func_load(add)
+    # s.func_load(minus)
+    # s.func_load(mul)
+    # s.func_load(div)
+    #基本时间操作函数
+    # s.func_load(time_to_stamp)
+    # s.func_load(stamp_to_time)
+    # s.func_load(get_time)
+    # s.func_load(get_stamp)
+    #测试与输出函数
+    s.func_load(creator)
+    s.func_load(test)
+    
+    # 注册函数
+    s.func_register()
 
-
-if __name__ == '__main__':
-    s = rpcServer.RPCServer()
-    s.register_function(test)       # 注册函数
-    s.save_funcs()
-    s.loop('127.0.0.1', 5000)       # 要监听的 IP 和端口
+    # 监听信息
+    s.loop()       
