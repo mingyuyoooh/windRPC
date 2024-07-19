@@ -21,6 +21,7 @@ class CONSTANTS:
     connect_max = 10 #最大连接数量
     timeout_max = 10 #超时时间设置
     code_method = 'utf-8' #编码方式
+    max_worker = 10 #最大工作数量
 
 class Tools:
 
@@ -51,6 +52,7 @@ class Tools:
         parser.add_argument('-mxcon', type=str, default= 10, help='max connection of server.')
         parser.add_argument('-mxtmo', type=int, default = 10, help = 'max timeoutset of server for connection.')
         parser.add_argument('-cdmet', type=str, default = 'utf-8', help = 'server code method.')
+        parser.add_argument('-mxwrk', type=int, default = 10, help = 'server max worker.')
         args = parser.parse_args()
         #启动参数加载
         CONSTANTS.host_server = args.i
@@ -62,6 +64,7 @@ class Tools:
         CONSTANTS.connect_max = args.mxcon
         CONSTANTS.timeout_max = args.mxtmo
         CONSTANTS.code_method = args.cdmet
+        CONSTANTS.max_worker = args.mxwrk
 
     """
     时间工具函数
